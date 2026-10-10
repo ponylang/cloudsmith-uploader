@@ -1,0 +1,13 @@
+.DS_Store
+*.dSYM
+/.pony_test/
+/.vscode/
+/build/
+/_corral/
+/_repos/
+lock.json
+.claude/settings.local.json
+
+# Python bytecode
+__pycache__/
+*.pyc
