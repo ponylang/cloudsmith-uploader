@@ -1,4 +1,13 @@
 {
-  "deps": [],
-  "info": {}
+  "packages": [
+    "cloudsmith-uploader"
+  ],
+  "info": {
+    "description": "Cloudsmith package uploader for Pony",
+    "homepage": "https://github.com/ponylang/cloudsmith-uploader",
+    "license": "BSD-2-Clause",
+    "version": "0.0.0",
+    "name": "cloudsmith-uploader"
+  },
+  "deps": []
 }
