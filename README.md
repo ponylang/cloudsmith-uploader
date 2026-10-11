@@ -23,12 +23,29 @@ Nightly builds are available via [GHCR](https://github.com/orgs/ponylang/package
 
 ## Building from source
 
-You'll need `ponyc` and `corral` installed.
+You'll need `ponyc`, `corral`, and LibreSSL installed.
+
+On macOS:
+
+```bash
+brew install libressl
+```
+
+On Linux, use a distribution that ships LibreSSL or install it from source. The CI uses the `shared-docker-ci-standard-builder-with-libressl` image.
+
+On Windows, the build scripts in `.ci-scripts/` download LibreSSL automatically.
 
 ```bash
 git clone https://github.com/ponylang/cloudsmith-uploader
 cd cloudsmith-uploader
 make
+```
+
+To build with OpenSSL instead of LibreSSL:
+
+```bash
+make ssl=3.0.x  # OpenSSL 3.x
+make ssl=1.1.x  # OpenSSL 1.1.x
 ```
 
 To run tests:

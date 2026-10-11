@@ -2,6 +2,8 @@ prefix ?= /usr/local
 config ?= release
 arch ?=
 static ?= false
+ssl ?= libressl
+libressl_path ?=
 
 APPLICATION := cloudsmith-uploader
 COMPILE_WITH := corral run -- ponyc
@@ -23,6 +25,22 @@ ifeq ($(config),release)
 	PONYC = $(COMPILE_WITH)
 else
 	PONYC = $(COMPILE_WITH) --debug
+endif
+
+ifeq ($(ssl), 3.0.x)
+	PONYC += -Dopenssl_3.0.x
+else ifeq ($(ssl), 1.1.x)
+	PONYC += -Dopenssl_1.1.x
+else ifeq ($(ssl), libressl)
+	PONYC += -Dlibressl
+	ifeq ($(libressl_path),)
+		ifeq ($(shell uname -s),Darwin)
+			libressl_path := $(shell brew --prefix libressl 2>/dev/null)/lib
+		endif
+	endif
+	ifneq ($(libressl_path),)
+		PONYC += --path $(libressl_path)
+	endif
 endif
 
 ifneq ($(arch),)
@@ -77,7 +95,7 @@ install: $(binary)
 test: $(binary)
 	$(FETCH_DEPS_WITH)
 	cd tests && \
-		$(COMPILE_WITH) -d -V1 && ./tests --shuffle && \
+		$(PONYC) -d -V1 && ./tests --shuffle && \
 		rm tests && \
 		cd ..
 

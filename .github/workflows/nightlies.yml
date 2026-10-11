@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
       - name: Pull Docker image
-        run: docker pull ghcr.io/ponylang/shared-docker-ci-standard-builder:release
+        run: docker pull ghcr.io/ponylang/shared-docker-ci-standard-builder-with-libressl-4.2.1:release
       - name: Build and upload
         run: |
           docker run --rm \
@@ -32,7 +32,7 @@ jobs:
             -e GITHUB_REPOSITORY=${{ github.repository }} \
             -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} \
             -e GITHUB_ACTOR=${{ github.actor }} \
-            ghcr.io/ponylang/shared-docker-ci-standard-builder:release \
+            ghcr.io/ponylang/shared-docker-ci-standard-builder-with-libressl-4.2.1:release \
             bash .ci-scripts/release/arm64-unknown-linux-nightly.bash
       - name: Send alert on failure
         if: ${{ failure() }}
@@ -50,7 +50,7 @@ jobs:
     name: Build and upload x86-64-unknown-linux-nightly
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/ponylang/shared-docker-ci-standard-builder:release
+      image: ghcr.io/ponylang/shared-docker-ci-standard-builder-with-libressl-4.2.1:release
     steps:
       - uses: actions/checkout@v6.0.2
       - name: Build and upload
@@ -74,6 +74,18 @@ jobs:
     runs-on: windows-2025-vs2026
     steps:
       - uses: actions/checkout@v6.0.2
+      - name: Cache LibreSSL libs
+        id: cache-libressl
+        uses: actions/cache@v5.0.3
+        with:
+          path: |
+            ssl.lib
+            crypto.lib
+            tls.lib
+          key: libressl-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.ci-scripts/windows-install-libressl.ps1') }}
+      - name: Install LibreSSL
+        if: steps.cache-libressl.outputs.cache-hit != 'true'
+        run: .ci-scripts\windows-install-libressl.ps1
       - name: Build and upload
         run: |
           # Fail the step on the first failing native command; pwsh treats a
@@ -110,6 +122,18 @@ jobs:
     runs-on: windows-11-arm
     steps:
       - uses: actions/checkout@v6.0.2
+      - name: Cache LibreSSL libs
+        id: cache-libressl
+        uses: actions/cache@v5.0.3
+        with:
+          path: |
+            ssl.lib
+            crypto.lib
+            tls.lib
+          key: libressl-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.ci-scripts/windows-install-libressl.ps1') }}
+      - name: Install LibreSSL
+        if: steps.cache-libressl.outputs.cache-hit != 'true'
+        run: .ci-scripts\windows-install-libressl.ps1
       - name: Build and upload
         run: |
           # Fail the step on the first failing native command; pwsh treats a
@@ -149,7 +173,7 @@ jobs:
       - name: install ponyc
         run: bash .ci-scripts/macos-x86-install-pony-tools.bash release
       - name: brew install dependencies
-        run: brew install coreutils
+        run: brew install coreutils libressl
       - name: Build and upload
         run: |
           export PATH="/tmp/corral/bin/:/tmp/ponyc/bin/:$PATH"
@@ -176,7 +200,7 @@ jobs:
       - name: install ponyc
         run: bash .ci-scripts/macos-arm64-install-pony-tools.bash release
       - name: brew install dependencies
-        run: brew install coreutils
+        run: brew install coreutils libressl
       - name: Build and upload
         run: |
           export PATH="/tmp/corral/bin/:/tmp/ponyc/bin/:$PATH"
