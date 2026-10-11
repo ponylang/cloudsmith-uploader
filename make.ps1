@@ -17,7 +17,11 @@ Param(
 
   [Parameter(HelpMessage="Directory to install to.")]
   [string]
-  $Destdir = "build/install"
+  $Destdir = "build/install",
+
+  [Parameter(HelpMessage="SSL version (libressl, 3.0.x, 1.1.x).")]
+  [string]
+  $Ssl = "libressl"
 )
 
 $ErrorActionPreference = "Stop"
@@ -83,6 +87,13 @@ switch ($Version)
 }
 
 $ponyArgs = ""
+
+switch ($Ssl)
+{
+  "3.0.x" { $ponyArgs += " -Dopenssl_3.0.x" }
+  "1.1.x" { $ponyArgs += " -Dopenssl_1.1.x" }
+  "libressl" { $ponyArgs += " -Dlibressl" }
+}
 
 Write-Host "Configuration:    $Config"
 Write-Host "Version:          $Version"
