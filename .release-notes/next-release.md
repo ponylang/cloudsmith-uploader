@@ -1,3 +1,0 @@
-## Initial Release
-
-Initial release.
