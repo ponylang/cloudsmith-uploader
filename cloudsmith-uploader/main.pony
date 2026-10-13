@@ -124,8 +124,28 @@ actor Main
       let ssl_ctx: SSLContext val =
         try
           recover val
-            SSLContext
-              .> set_default_verify_paths()?
+            let ctx = SSLContext
+            var any_loaded: Bool = false
+            try
+              ctx.set_default_verify_paths()?
+              any_loaded = true
+            end
+            let ca_files =
+              [
+                "/etc/ssl/cert.pem"
+                "/etc/ssl/certs/ca-certificates.crt"
+                "/etc/pki/tls/certs/ca-bundle.crt"
+                "/etc/ssl/ca-bundle.pem"
+              ]
+            for ca_file in ca_files.values() do
+              try
+                ctx.set_authority(
+                  FilePath(file_auth, ca_file))?
+                any_loaded = true
+              end
+            end
+            if not any_loaded then error end
+            ctx
           end
         else
           env.err.print(
