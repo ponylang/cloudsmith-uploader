@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
+- Fix TLS certificate verification failing on some Linux distributions ([PR #3](https://github.com/ponylang/cloudsmith-uploader/pull/3))
 
 ### Added
 
