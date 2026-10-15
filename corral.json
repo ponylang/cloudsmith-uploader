@@ -6,7 +6,7 @@
     "description": "Cloudsmith package uploader for Pony",
     "homepage": "https://github.com/ponylang/cloudsmith-uploader",
     "license": "BSD-2-Clause",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "name": "cloudsmith-uploader"
   },
   "deps": []
