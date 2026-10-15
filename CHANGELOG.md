@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ### Fixed
 
+- Fix SSL handshake failure on Windows ([PR #6](https://github.com/ponylang/cloudsmith-uploader/pull/6))
 
 ### Added
 
