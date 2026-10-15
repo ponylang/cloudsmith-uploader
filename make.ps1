@@ -92,7 +92,12 @@ switch ($Ssl)
 {
   "3.0.x" { $ponyArgs += " -Dopenssl_3.0.x" }
   "1.1.x" { $ponyArgs += " -Dopenssl_1.1.x" }
-  "libressl" { $ponyArgs += " -Dlibressl" }
+  "libressl" {
+    $ponyArgs += " -Dlibressl"
+    if ($Arch -ieq 'x86-64') { $libresslDir = "windows-x86-64" }
+    elseif ($Arch -ieq 'arm64') { $libresslDir = "windows-arm64" }
+    $ponyArgs += " --path `"$rootDir\lib\$libresslDir`""
+  }
 }
 
 Write-Host "Configuration:    $Config"
