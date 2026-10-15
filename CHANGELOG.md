@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Fixed
 
 - Fix SSL handshake failure on Windows ([PR #6](https://github.com/ponylang/cloudsmith-uploader/pull/6))
+- Fix macOS binaries requiring LibreSSL to be installed on the host ([PR #5](https://github.com/ponylang/cloudsmith-uploader/pull/5))
 
 ### Added
 
