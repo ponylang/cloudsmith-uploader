@@ -35,7 +35,11 @@ else ifeq ($(ssl), libressl)
 	PONYC += -Dlibressl
 	ifeq ($(libressl_path),)
 		ifeq ($(shell uname -s),Darwin)
-			libressl_path := $(shell brew --prefix libressl 2>/dev/null)/lib
+			ifeq ($(shell uname -m),arm64)
+				libressl_path := lib/darwin-arm64
+			else
+				libressl_path := lib/darwin-x86-64
+			endif
 		endif
 	endif
 	ifneq ($(libressl_path),)

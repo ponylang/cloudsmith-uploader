@@ -94,7 +94,7 @@ jobs:
       - name: install ponyc
         run: bash .ci-scripts/macos-x86-install-pony-tools.bash release
       - name: brew install dependencies
-        run: brew install coreutils libressl
+        run: brew install coreutils
       - name: Build and upload
         run: |
           export PATH="/tmp/corral/bin/:/tmp/ponyc/bin/:$PATH"
@@ -113,7 +113,7 @@ jobs:
       - name: install ponyc
         run: bash .ci-scripts/macos-arm64-install-pony-tools.bash release
       - name: brew install dependencies
-        run: brew install coreutils libressl
+        run: brew install coreutils
       - name: Build and upload
         run: |
           export PATH="/tmp/corral/bin/:/tmp/ponyc/bin/:$PATH"
