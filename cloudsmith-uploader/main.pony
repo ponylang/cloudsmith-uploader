@@ -126,6 +126,12 @@ actor Main
           recover val
             let ctx = SSLContext
             var any_loaded: Bool = false
+            ifdef windows then
+              try
+                ctx.set_authority(None)?
+                any_loaded = true
+              end
+            end
             try
               ctx.set_default_verify_paths()?
               any_loaded = true
