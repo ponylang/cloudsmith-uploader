@@ -19,28 +19,28 @@ actor Main
             OptionSpec.string(
               "version",
               "Package version"
-              where short' = 'v')
+              where short' = 'v')?
             OptionSpec.string(
               "api-key",
               "Cloudsmith API key" +
                 " (or CLOUDSMITH_API_KEY env var)"
-              where short' = 'k', default' = "")
+              where short' = 'k', default' = "")?
             OptionSpec.string(
               "summary",
               "Package summary"
-              where short' = 's')
+              where short' = 's')?
             OptionSpec.string(
               "description",
               "Package description"
-              where short' = 'd')
+              where short' = 'd')?
           ],
           [
             ArgSpec.string(
               "repo",
-              "Owner/repo (e.g. ponylang/releases)")
+              "Owner/repo (e.g. ponylang/releases)")?
             ArgSpec.string(
               "file",
-              "File to upload")
+              "File to upload")?
           ])?
 
       let cmd =

@@ -86,17 +86,18 @@ switch ($Version)
   "" { $Version = (Get-Content "$rootDir\VERSION") + "-" + (& git rev-parse --short --verify HEAD) }
 }
 
-$ponyArgs = ""
+$ponyArgs = @()
 
 switch ($Ssl)
 {
-  "3.0.x" { $ponyArgs += " -Dopenssl_3.0.x" }
-  "1.1.x" { $ponyArgs += " -Dopenssl_1.1.x" }
+  "3.0.x" { $ponyArgs += "-Dopenssl_3.0.x" }
+  "1.1.x" { $ponyArgs += "-Dopenssl_1.1.x" }
   "libressl" {
-    $ponyArgs += " -Dlibressl"
+    $ponyArgs += "-Dlibressl"
     if ($Arch -ieq 'x86-64') { $libresslDir = "windows-x86-64" }
     elseif ($Arch -ieq 'arm64') { $libresslDir = "windows-arm64" }
-    $ponyArgs += " --path `"$rootDir\lib\$libresslDir`""
+    $ponyArgs += "--path"
+    $ponyArgs += "$rootDir\lib\$libresslDir"
   }
 }
 
