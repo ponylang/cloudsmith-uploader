@@ -23,7 +23,7 @@ Nightly builds are available via [GHCR](https://github.com/orgs/ponylang/package
 
 ## Building from source
 
-You'll need `ponyc`, `corral`, and LibreSSL installed.
+You'll need `ponyc` (0.79.0 or later), `corral`, and LibreSSL installed.
 
 On macOS and Windows, static LibreSSL libraries are vendored in `lib/` — no separate installation needed.
 
